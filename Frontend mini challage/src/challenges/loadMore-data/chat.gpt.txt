@@ -1,0 +1,42 @@
+import React, { useState, useEffect } from "react";
+
+const LoadMoreData = () => {
+  // State to hold all loaded items
+  const [data, setData] = useState([]);
+  // State to hold the number of items displayed
+  const [displayCount, setDisplayCount] = useState(5);
+  const itemsPerPage = 5; // Number of items to load per click
+
+  // Mock fetch function to simulate data fetching
+  const fetchData = async () => {
+    // In real use, replace with actual data fetching
+    const response = Array.from({ length: 50 }, (_, i) => `Item ${i + 1}`);
+    setData(response);
+  };
+
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // Load more function to increase display count
+  const loadMore = () => {
+    setDisplayCount((prevCount) => prevCount + itemsPerPage);
+  };
+
+  return (
+    <div>
+      <h2>Load More Data Example</h2>
+      <ul>
+        {data.slice(0, displayCount).map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+      {displayCount < data.length && (
+        <button onClick={loadMore}>Load More</button>
+      )}
+    </div>
+  );
+};
+
+export default LoadMoreData;
